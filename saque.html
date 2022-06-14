@@ -1,0 +1,234 @@
+<meta charset="UTF-8">
+    <style>
+        table, td, th{
+            border:1px solid limegreen;
+        }
+    </style>
+<body>
+    <link rel="stylesheet" href="saque.css">
+<font size="4">
+    <h1>Banco do Linqueras</h1>
+    <h1>Saldo disponível: 18700 mil reais</h1>
+    <font>
+        <font size="3">
+            <h1>Insira o valor a ser sacado:</h1>
+        </font>
+        <br>
+        <input type="number">
+        <br>
+        <br>
+        <button>Sacar</button>
+
+        <p id="valores"></p>
+        <table id ="table" style="width:100%">
+            <tr>
+                <th>Valor da cédula</th>
+                <th>Notas Utilizadas</th>
+                <th>Notas disponíveis</th>
+            </tr>
+            <tr>
+                <td>Nota de 100: </td>
+                <td id="Notas-de-100">0</td>
+                <td id="banknotes100">100</td>
+              </tr>
+            <tr>
+                <td>Nota de 50: </td>
+                <td id="Notas-de-50">0</td>
+                <td id="banknotes50">100</td>
+            </tr>
+            <tr>
+                <td>Nota de 20: </td>
+                <td id="Notas-de-20">0</td>
+                <td id="banknotes20">100</td>
+            </tr>
+            <tr>
+                <td>Nota de 10: </td>
+                <td id="Notas-de-10">0</td>
+                <td id="banknotes10">100</td>
+            </tr>
+            <tr>
+                <td>Nota de 5: </td>
+                <td id="Notas-de-5">0</td>
+                <td id="banknotes5">100</td>
+            </tr>
+            <tr>
+                <td>Nota de 2:</td>
+                <td id="Notas-de-2">0</td>
+                <td id="banknotes2">100</td>
+            </tr>
+        </table>
+
+</body>
+        <script>
+
+            var banknotes2 = 100;
+            var banknotes5 = 100;
+            var banknotes10 = 100;
+            var banknotes20 = 100;
+            var banknotes50 = 100;
+            var banknotes100 = 100;
+
+            var saldo = 18700;
+            var resto = 0;
+
+            function verify() {
+                notes100 = 0;
+                notes50 = 0;
+                notes20 = 0;
+                notes10 = 0;
+                notes5 = 0;
+                notes2 = 0;
+
+                input = document.querySelector("input");
+                input.focus();
+
+                resto = input.value;
+
+                var media = (banknotes100 + banknotes50 + banknotes20 + banknotes10 + banknotes5 + banknotes2) / 6;
+                var loop = false;
+
+                if (resto <= saldo) {
+
+                    while (resto > 0) {
+
+                        const lastDigit = Number(String(resto).slice(-1));
+              
+                        if (lastDigit == 3 || lastDigit == 7 || lastDigit == 9) {                          
+                            switch (lastDigit) {
+                                case 3:
+                                if(resto > 3){
+                                  var notes2 = 4;
+                                  resto = (resto - notes2 * 2);
+                                  banknotes2 = banknotes2 - notes2
+                                  break;
+                                }
+                                case 7:
+                                  var notes2 = 1;
+                                  resto = (resto - notes2 * 2);
+                                  banknotes2 = banknotes2 - notes2
+                                  break;
+                                case 9:
+                                  var notes2 = 2;
+                                  resto = (resto - notes2 * 2);
+                                  banknotes2 = banknotes2 - notes2
+                                  break;
+                                default:
+                                  break;
+                             }
+                         }
+
+                        if (loop == true && (notes100 != 0 || notes50 != 0 || notes20 != 0 || notes10 != 0 || notes5 != 0 || notes2 != 0)) {
+
+                            notes100 = 0;
+                            notes50 = 0;
+                            notes20 = 0;
+                            notes10 = 0;
+                            notes5 = 0;
+                            notes2 = 0;
+                        }
+                        
+
+                        if ((banknotes100 >= media && (banknotes100 - Math.ceil(resto / 100)) >= 0 && resto != 0) || loop == true && (banknotes100 - Math.ceil(resto / 100)) >= 0 && banknotes100 != 0) {
+                            var notes100 = Math.floor(resto / 100);
+                            resto = (resto - notes100 * 100);
+                            banknotes100 = banknotes100 - notes100
+
+                            console.log(resto);
+
+                            if (banknotes100 < notes100) {
+                                continue
+                            }
+                        }
+                        if ((banknotes50 >= media && (banknotes50 - Math.ceil(resto / 50)) >= 0 && resto != 0) || loop == true && (banknotes50 - Math.ceil(resto / 50)) >= 0 && banknotes50 != 0) {
+                            var notes50 = Math.floor(resto / 50);
+                            resto = (resto - notes50 * 50);
+                            banknotes50 = banknotes50 - notes50
+
+                            console.log(resto);
+
+                            if (banknotes50 < notes50) {
+                                continue
+                            }
+                        }
+                        if ((banknotes20 >= media && (banknotes20 - Math.ceil(resto / 20)) >= 0 && resto != 0) || loop == true && (banknotes20 - Math.ceil(resto / 20)) >= 0 && banknotes20 != 0) {
+                            var notes20 = Math.floor(resto / 20);
+                            resto = (resto - notes20 * 20);
+                            banknotes20 = banknotes20 - notes20
+
+                            console.log(resto);
+
+                            if (banknotes20 < notes20) {
+                                continue
+                            }
+                        }
+                        if ((banknotes10 >= media && (banknotes10 - Math.ceil(resto / 10)) >= 0 && resto != 0) || loop == true && (banknotes10 - Math.ceil(resto / 10)) >= 0 && banknotes10 != 0) {
+                            var notes10 = Math.floor(resto / 10)
+                            resto = (resto - notes10 * 10);
+                            banknotes10 = banknotes10 - notes10
+
+                            console.log(resto);
+
+                            if (banknotes10 < notes10) {
+                                continue
+                            }
+                        }
+                        if (((banknotes5 >= media && (banknotes5 - Math.ceil(resto / 5)) >= 0 && resto != 0) || loop == true && (banknotes5 - Math.ceil(resto / 5)) >= 0) && banknotes5 != 0 || resto == 5) {
+                            var notes5 = Math.floor(resto / 5);
+                            resto = (resto - notes5 * 5);
+                            banknotes5 = banknotes5 - notes5
+
+                            console.log(resto);
+
+                            if (banknotes5 < notes5) {
+                                continue
+                            }
+                        }
+                        if ((banknotes2 >= media && (banknotes2 - Math.ceil(resto / 2)) >= 0 && resto != 0) || loop == true && (banknotes2 - Math.ceil(resto / 2)) >= 0 && banknotes2 != 0) {
+                            var notes2 = Math.floor(resto / 2);
+                            resto = (resto - notes2 * 2);
+                            banknotes2 = banknotes2 - notes2
+
+                            console.log(resto);
+
+                            if (banknotes2 < notes2) {
+                                continue
+                            }
+                        }
+
+                        if (notes100 == 0 && notes50 == 0 && notes20 == 0 && notes10 == 0 && notes5 == 0 && notes2 == 0 && loop == true)
+                            break;
+
+                        if (resto > 0)
+                            loop = true;
+                    }
+                }
+                if (resto != 0) {
+                    document.write("O valor desejado não pode ser entregue");
+                }
+                else {
+                    saldo = saldo - input.value;
+                    escrita="Saque realizado com sucesso!<br> Saldo disponível: " + saldo;
+                    document.getElementById("Notas-de-2").innerHTML = notes2;
+                    document.getElementById("banknotes2").innerHTML = banknotes2;
+                    document.getElementById("Notas-de-5").innerHTML = notes5;
+                    document.getElementById("banknotes5").innerHTML = banknotes5;
+                    document.getElementById("Notas-de-10").innerHTML = notes10;
+                    document.getElementById("banknotes10").innerHTML = banknotes10;
+                    document.getElementById("Notas-de-20").innerHTML = notes20;
+                    document.getElementById("banknotes20").innerHTML = banknotes20;
+                    document.getElementById("Notas-de-50").innerHTML = notes50;
+                    document.getElementById("banknotes50").innerHTML = banknotes50;
+                    document.getElementById("Notas-de-100").innerHTML = notes100;
+                    document.getElementById("banknotes100").innerHTML = banknotes100;
+                    
+                    document.getElementById("valores").innerHTML = escrita;
+                }
+                if (saldo <= 0) {
+                    alert("Parabéns, você faliu!");
+                }
+            }
+
+            var button = document.querySelector("button");
+            button.onclick = verify;
+
+        </script>
